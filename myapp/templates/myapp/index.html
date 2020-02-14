@@ -9,11 +9,12 @@ div {
 </style>
 
 <h2>Myblog</h2>
-<a href="{% url 'newblog'%}">New blog</a>
+
+<a href="{% url 'getblog'%}">New blog</a>
 
 {% for blog in blog_list %}
     <div>
-    <h4>{{ blog.blog_title }}</h4></br>
+    <a href="{% url 'detail' blog.id%}"><h4>{{ blog.blog_title }}</h4></a></br>
     {{ blog.blog_text }}</br></br>
     {{ blog.updated_on }}&nbsp;{{ blog.user }}
     <p align="right">edit</p>

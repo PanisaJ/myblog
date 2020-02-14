@@ -1,0 +1,28 @@
+<style>
+div {
+  background-color: lightgrey;
+  width: 800px;
+  border: 2px solid black;
+  padding: 50px;
+  margin: 20px;
+}
+</style>
+<a href="{% url 'index'%}">back<a>
+<div>
+<h2>{{ blog.blog_title }}</h2>
+{{ blog.blog_text }}</br></br>
+{{ blog.updated_on }}&nbsp;{{ blog.user }}
+</div>
+<form method="post" >
+{% csrf_token %}
+    {{ form.as_p }}
+<input type="submit" value="pubilc">
+</form>
+{% for comment in blog.comment_set.all %}
+    <div>
+        {{ comment.comment_text }}</br>
+        {{ comment.score }}</br>
+        {{ comment.user }}</br>
+        {{ comment.created_on }}
+    </div>
+{% endfor %}
