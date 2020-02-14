@@ -1,0 +1,30 @@
+<style>
+div {
+  background-color: lightgrey;
+  width: 800px;
+  border: 2px solid black;
+  padding: 50px;
+  margin: 20px;
+}
+</style>
+
+<h2>Myblog</h2>
+<a href="{% url 'newblog'%}">New blog</a>
+
+{% for blog in blog_list %}
+    <div>
+    <h4>{{ blog.blog_title }}</h4></br>
+    {{ blog.blog_text }}</br></br>
+    {{ blog.updated_on }}&nbsp;{{ blog.user }}
+    <p align="right">edit</p>
+    </div>
+    <h4>comment:</h4>
+    {% for comment in blog.comment_set.all %}
+        <div>
+            {{ comment.comment_text }}</br>
+            {{ comment.score }}</br>
+            {{ comment.user }}</br>
+            {{ comment.created_on }}
+        </div>
+    {% endfor %}
+{% endfor %}
