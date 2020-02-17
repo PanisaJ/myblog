@@ -1,7 +1,13 @@
+
+
+<div class="default">
 <h2>new blog</h2>
 
 <form method="post" >
 {% csrf_token %}
+<div class="default">
     {{ form.as_p }}
-<input type="submit" value="pubilc">
+<button type="submit" class="btn btn-primary">Submit</button>
+</div>
 </form>
+</div>

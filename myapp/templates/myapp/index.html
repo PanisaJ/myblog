@@ -1,31 +1,48 @@
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+</head>
 <style>
-div {
-  background-color: lightgrey;
+div.default {
   width: 800px;
+  margin: auto;
+}
+div.blog {
+  background-color: lightgrey;
   border: 2px solid black;
   padding: 50px;
-  margin: 20px;
+}
+div.comment {
+  background-color: lightgrey;
+  border: 2px solid black;
+  padding: 50px;
+  width: 700px;
 }
 </style>
-
+<div class="default">
 <h2>Myblog</h2>
 
 <a href="{% url 'getblog'%}">New blog</a>
 
 {% for blog in blog_list %}
-    <div>
+    <div class="blog">
     <a href="{% url 'detail' blog.id%}"><h4>{{ blog.blog_title }}</h4></a></br>
     {{ blog.blog_text }}</br></br>
     {{ blog.updated_on }}&nbsp;{{ blog.user }}
-    <p align="right">edit</p>
-    </div>
+    <p align="right"><a href="{% url 'edit' blog.id %}">edit</a></p>
+    <p align="right"><a href="{% url 'delete' blog.id %}">delete</a></p>
+    </div></br>
+    {% if blog.comment_set.all %}
+    
     <h4>comment:</h4>
     {% for comment in blog.comment_set.all %}
-        <div>
+    <div class="comment">
             {{ comment.comment_text }}</br>
             {{ comment.score }}</br>
             {{ comment.user }}</br>
             {{ comment.created_on }}
-        </div>
+    </div></br>
     {% endfor %}
+    {% endif %}
 {% endfor %}
+</div>

@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponse
 from .models import Blog, Comment
 from .forms import BlogForm, CommentForm
@@ -28,9 +28,7 @@ def detail(request, blog_id):
     if request.method == 'POST':
         form = CommentForm(request.POST)
         if form.is_valid():
-            newform = form.save(commit=False)
-            newform.blog = Blog.objects.get(pk=blog_id) 
-            newform.save()  
+            form.save(blog_id)
         else:
             context['error_message'] = "You didn't insert some input."
     else:
@@ -38,4 +36,28 @@ def detail(request, blog_id):
     blog = get_object_or_404(Blog, pk=blog_id)
     context['blog'] = blog
     context['form'] = form
+    context['star_num'] = range(5)
     return render(request, 'myapp/detail.html', context)
+
+def edit_blog(request, blog_id):
+    blog = get_object_or_404(Blog, pk=blog_id)
+    data = {'blog_title' : blog.blog_title, 'blog_text' : blog.blog_text, 'user' : blog.user}
+    context = {}
+    if request.method == 'POST':
+        form = BlogForm(request.POST, data)
+        if form.is_valid():
+            form.save()
+            context['blog'] = blog
+            context['form'] = form
+            return render(request, 'myapp/detail.html', context)
+        else:
+            context['error_message'] = "You didn't edit some input."
+    else:
+        form = BlogForm(data)
+    context['form'] = form
+    return render(request, 'myapp/edit_blog.html', context)
+
+def delete_blog(request, blog_id):
+    blog = get_object_or_404(Blog, pk=blog_id)
+    blog.delete()
+    return redirect('index')
