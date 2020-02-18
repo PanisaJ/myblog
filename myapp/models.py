@@ -11,7 +11,7 @@ class Blog(models.Model):
 
 class Comment(models.Model):
     comment_text = models.TextField()
-    score = models.IntegerField(default=0)
+    user_rating = models.IntegerField(default=0)
     created_on = models.DateTimeField(auto_now_add=True)
     user = models.CharField(max_length=100) 
     blog = models.ForeignKey(Blog, on_delete=models.CASCADE)

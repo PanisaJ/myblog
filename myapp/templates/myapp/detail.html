@@ -56,7 +56,6 @@ div.comment {
             {% if field.help_text %}
                 <small class="form-text text-muted">{{ field.help_text }}</small>
             {% endif %}
-        
         {% endfor %}</br>
        
         </br><button type="submit" class="btn btn-primary">Submit</button>
@@ -65,7 +64,9 @@ div.comment {
     {% for comment in blog.comment_set.all %}
         <div class="comment">
             {{ comment.comment_text }}</br>
-            {{ comment.score }}</br>
+            {% for star in star_num %}
+                <span class="fa fa-star {% if star < comment.user_rating %}checked{% endif %}"></span>
+            {% endfor %}</br>
             {{ comment.user }}</br>
             {{ comment.created_on }}
         </div></br>

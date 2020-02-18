@@ -12,12 +12,6 @@ div.blog {
   border: 2px solid black;
   padding: 50px;
 }
-div.comment {
-  background-color: lightgrey;
-  border: 2px solid black;
-  padding: 50px;
-  width: 700px;
-}
 </style>
 <div class="default">
 <h2>Myblog</h2>
@@ -31,18 +25,7 @@ div.comment {
     {{ blog.updated_on }}&nbsp;{{ blog.user }}
     <p align="right"><a href="{% url 'edit' blog.id %}">edit</a></p>
     <p align="right"><a href="{% url 'delete' blog.id %}">delete</a></p>
+    <p>{{ blog.comment_set.all|length }} comment</p>
     </div></br>
-    {% if blog.comment_set.all %}
-    
-    <h4>comment:</h4>
-    {% for comment in blog.comment_set.all %}
-    <div class="comment">
-            {{ comment.comment_text }}</br>
-            {{ comment.score }}</br>
-            {{ comment.user }}</br>
-            {{ comment.created_on }}
-    </div></br>
-    {% endfor %}
-    {% endif %}
 {% endfor %}
 </div>

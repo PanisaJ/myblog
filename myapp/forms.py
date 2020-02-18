@@ -1,4 +1,5 @@
 from django import forms
+from django_starfield import Stars
 from .models import Blog, Comment
 from django.shortcuts import get_object_or_404
 
@@ -16,13 +17,13 @@ class BlogForm(forms.Form):
 
 class CommentForm(forms.Form):
     comment_text = forms.CharField(widget=forms.Textarea())
-    score = forms.IntegerField()
+    user_rating = forms.IntegerField(widget=Stars)
     user = forms.CharField() 
 
     def save(self, blog_id):
         comment = Comment()
         comment.comment_text = self.cleaned_data['comment_text'] 
-        comment.score = self.cleaned_data['score'] 
+        comment.user_rating = self.cleaned_data['user_rating'] 
         comment.user = self.cleaned_data['user'] 
         comment.blog = get_object_or_404(Blog, pk=blog_id)
         comment.save()
