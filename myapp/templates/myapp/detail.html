@@ -61,7 +61,7 @@ div.comment {
         </br><button type="submit" class="btn btn-primary">Submit</button>
         </div>
     </form>
-    {% for comment in blog.comment_set.all %}
+    {% for comment in blog.sorted_comment_set %}
         <div class="comment">
             {{ comment.comment_text }}</br>
             {% for star in star_num %}
