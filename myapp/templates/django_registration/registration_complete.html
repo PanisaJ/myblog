@@ -1,13 +1,17 @@
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+</head>
 
-{% block content_title %}
-  <h2>Registration complete</h2>
-{% endblock %}
+<style>
+div {
+  width: 800px;
+  margin: auto;
+}
+</style>
 
-
-{% block content %}
-  <h3>Activate your account</h3>
-  <p>We will be sending you an email with an activation link which you'll need to click to verify this account. If you choose not to activate your account it will eventually become disabled.</p>
-  <p>Check your email.</p>
-{% endblock %}
+<div>
+<h2>Registration complete</h2>
 
 <a href="{% url 'index' %}">Go to index</a></br>
+</div>

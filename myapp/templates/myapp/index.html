@@ -21,7 +21,7 @@ div.blog {
     <a href="{% url 'new_blog'%}">New blog</a></br>
     <a href="/accounts/logout/">Log out</a>
 {% else %}
-    <p>Welcome, new user. Please log in.</p>
+    <p>Welcome, new user. Please <a href="/accounts/login/">log in</a>.</p>
 {% endif %}
 
 
@@ -31,8 +31,10 @@ div.blog {
     <a href="{% url 'detail' blog.id%}"><h4>{{ blog.blog_title }}</h4></a></br>
     {{ blog.blog_text }}</br></br>
     {{ blog.updated_on }}&nbsp;{{ blog.user }}
-    <p align="right"><a href="{% url 'edit' blog.id %}">edit</a></p>
-    <p align="right"><a href="{% url 'delete' blog.id %}">delete</a></p>
+    {% if user.is_authenticated %}
+      <p align="right"><a href="{% url 'edit' blog.id %}">edit</a></p>
+      <p align="right"><a href="{% url 'delete' blog.id %}">delete</a></p>
+    {% endif %}
     <p>{{ blog.comment_set.all|length }} comment</p>
     </div></br>
 {% endfor %}

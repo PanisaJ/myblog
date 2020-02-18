@@ -32,7 +32,7 @@ div.comment {
     {{ blog.blog_text }}</br></br>
     {{ blog.updated_on }}&nbsp;{{ blog.user }}
 </div></br>
-
+{% if user.is_authenticated %}
     <form method="post">
         {% csrf_token %}
         {% for field in form.visible_fields %}
@@ -61,6 +61,7 @@ div.comment {
         </br><button type="submit" class="btn btn-primary">Submit</button>
         </div>
     </form>
+{% endif %}
     {% for comment in blog.sorted_comment_set %}
         <div class="comment">
             {{ comment.comment_text }}</br>

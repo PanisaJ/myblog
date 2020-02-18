@@ -5,7 +5,7 @@ from .forms import BlogForm, CommentForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 
-@login_required(login_url='/accounts/login/')
+#@login_required(login_url='/accounts/login/')
 def index(request):
     blog_list = Blog.objects.order_by('-updated_on')[:5]
     context = { 'blog_list' : blog_list }
