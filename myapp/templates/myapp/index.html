@@ -6,6 +6,7 @@
 div.default {
   width: 800px;
   margin: auto;
+  margin-top: 30px;
 }
 div.blog {
   background-color: lightgrey;
@@ -17,9 +18,10 @@ div.blog {
 <h2>Myblog</h2>
 
 {% if user.is_authenticated %}
-    <p>Welcome, {{ user.username }}. Thanks for logging in.</p>
+    <p>Welcome, <a href="{% url 'profile' user%}">{{ user.username }}</a>. Thanks for logging in.</p>
     <a href="{% url 'new_blog'%}">New blog</a></br>
     <a href="/accounts/logout/">Log out</a>
+    <a href=""></a>
 {% else %}
     <p>Welcome, new user. Please <a href="/accounts/login/">log in</a>.</p>
 {% endif %}
@@ -30,8 +32,8 @@ div.blog {
     <div class="blog">
     <a href="{% url 'detail' blog.id%}"><h4>{{ blog.blog_title }}</h4></a></br>
     {{ blog.blog_text }}</br></br>
-    {{ blog.updated_on }}&nbsp;{{ blog.user }}
-    {% if user.is_authenticated %}
+    {{ blog.updated_on }}&nbsp;<a href="{% url 'profile' blog.user %}">{{ blog.user }}</a>
+    {% if user == blog.user %}
       <p align="right"><a href="{% url 'edit' blog.id %}">edit</a></p>
       <p align="right"><a href="{% url 'delete' blog.id %}">delete</a></p>
     {% endif %}

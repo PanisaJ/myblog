@@ -13,12 +13,11 @@ div {
 </style>
 
 <div>
-<h2>Login</h2>
-<form method="post">
+<h2>Edit image</h2>
+<form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">Login</button>
+    <button type="submit" class="btn btn-primary">Upload</button>
 </form>
-<a href="/accounts/register/">sign up</a></br>
-<a href="{% url 'index'%}">back</a></br>
+<a href="{% url 'profile' user%}">back</a></br>
 </div>

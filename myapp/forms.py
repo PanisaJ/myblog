@@ -1,6 +1,6 @@
 from django import forms
 from django_starfield import Stars
-from .models import Blog, Comment
+from .models import Blog, Comment, UserProfile
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
 
@@ -25,3 +25,11 @@ class CommentForm(forms.Form):
         comment.user = get_object_or_404(User, username=user)
         comment.blog = get_object_or_404(Blog, pk=blog_id)
         comment.save()
+
+class UserProfileForm(forms.Form):
+    profile_image = forms.ImageField()
+
+    def save(self, user, userProfile=UserProfile()):
+        userProfile.profile_image = self.cleaned_data['profile_image']
+        userProfile.user = get_object_or_404(User, username=user)
+        userProfile.save()
