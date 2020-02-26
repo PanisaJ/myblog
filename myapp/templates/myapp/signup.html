@@ -8,15 +8,15 @@ div {
 }
 </style>
 {% endblock %}
+
 {% block content %}
 <div>
-<h2>Login</h2>
+<h2>Sign up</h2>
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">Login</button>
+    <button type="submit" class="btn btn-primary">Create</button>
 </form>
-<a href="{% url 'signup'%}">sign up</a></br>
 <a href="{% url 'index'%}">back</a></br>
 </div>
 {% endblock %}

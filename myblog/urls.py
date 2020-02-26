@@ -22,7 +22,6 @@ urlpatterns = [
     path('myapp/', include('myapp.urls')),
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('accounts/', include('django_registration.backends.one_step.urls')),
 ] 
 
 if settings.DEBUG:

@@ -1,18 +1,15 @@
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
-from django.contrib.auth.models import User
-from .models import Blog, Comment, UserProfile
+from django.contrib.auth.admin import UserAdmin
 
-class UserProfileInline(admin.StackedInline):
-    model = UserProfile
-    can_delete = False
-    verbose_name_plural = 'userProfile'
+from .models import Blog, Comment, CustomUser
+from .forms import CustomUserCreationForm, CustomUserChangeForm
 
-class UserAdmin(BaseUserAdmin):
-    inlines = (UserProfileInline,)
+class CustomUserAdmin(UserAdmin):
+    add_form = CustomUserCreationForm
+    form = CustomUserChangeForm
+    model = CustomUser
+    list_display = ['email', 'username', 'profile_image']
 
-admin.site.unregister(User)
-admin.site.register(User, UserAdmin)
-
+admin.site.register(CustomUser, CustomUserAdmin)
 admin.site.register(Blog)
 admin.site.register(Comment)

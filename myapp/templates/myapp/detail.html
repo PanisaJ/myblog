@@ -1,9 +1,6 @@
-<head>
-  <meta charset="utf-8">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-</head>
-
+{% extends "base.html" %}
+{% load widget_tweaks %}
+{% block style %}
 <style>
 div {
   width: 800px;
@@ -11,8 +8,8 @@ div {
   margin-top: 30px;
 }
 div.blog {
-  background-color: lightgrey;
-  border: 2px solid black;
+  /* background-color: lightgrey;
+  border: 2px solid black; */
   padding: 50px;
 }
 div.comment {
@@ -24,12 +21,17 @@ div.comment {
 .checked {
   color: orange;
 }
+h2.font-lobster {
+  font-family: "Lobster", serif;
+  color: rgb(34, 82, 121);
+}
 </style>
-{% load widget_tweaks %}
+{% endblock %}
+
 {% block content %}
+<div>
 <div class="blog">
-    <a href="{% url 'index'%}">back<a>
-    <h2>{{ blog.blog_title }}</h2>
+    <h2 class="font-lobster">{{ blog.blog_title }}</h2></br>
     {{ blog.blog_text }}</br></br>
     {{ blog.updated_on }}&nbsp;{{ blog.user }}
 </div></br>
@@ -73,4 +75,5 @@ div.comment {
             {{ comment.created_on }}
         </div></br>
     {% endfor %}
+</div>
 {% endblock %}

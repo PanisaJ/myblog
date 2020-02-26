@@ -1,9 +1,6 @@
-<head>
-  <meta charset="utf-8">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-</head>
-
+{% extends "base.html" %}
+{% load static %}
+{% block style %}
 <style>
 div {
   width: 800px;
@@ -46,11 +43,12 @@ div {
  opacity: 0.7; 
 }
 </style>
-
+{% endblock %}
+{% block content %}
 <div>
-<h3>{{ user_profile.user }}</h3></br>
+<h3>{{ user_profile.username }}</h3></br>
 <div class="img">
-{% if user == user_profile.user %}<a href="{% url 'edit_image' user_profile.user%}" onmouseover="Edit"><div>Edit</div>{% endif %}<img src="{{ user_profile.profile_image.url }}" width='100%' height='100%'></a>
+{% if user.username == user_profile.username %}<a href="{% url 'edit_image' user_profile.username %}" onmouseover="Edit"><div>Edit</div>{% endif %}<img src="{{ user_profile.profile_image.url }}" width='100%' height='100%'></a>
 
 </div>
 <p>My blogs</p>
@@ -63,3 +61,4 @@ div {
 {% endif %}
 </br><a href="{% url 'index' %}" >Back</a></br>
 </div>
+{% endblock %}

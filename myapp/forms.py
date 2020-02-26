@@ -1,35 +1,29 @@
 from django import forms
 from django_starfield import Stars
-from .models import Blog, Comment, UserProfile
+from .models import Blog, Comment, CustomUser
 from django.shortcuts import get_object_or_404
-from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from .models import CustomUser
 
-class BlogForm(forms.Form):
-    blog_title = forms.CharField()
-    blog_text = forms.CharField(widget=forms.Textarea())
+class BlogCreateForm(forms.ModelForm):
+    class Meta:
+        model = Blog
+        fields = ['blog_title', 'blog_text']
 
-    def save(self, user, blog=Blog()):
-        blog.blog_title = self.cleaned_data['blog_title'] 
-        blog.blog_text = self.cleaned_data['blog_text'] 
-        blog.user = get_object_or_404(User, username=user)
-        blog.save()
+class CommentCreateForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['comment_text', 'user_rating']
+        widgets = { 'user_rating' : Stars }
 
-class CommentForm(forms.Form):
-    comment_text = forms.CharField(widget=forms.Textarea())
-    user_rating = forms.IntegerField(widget=Stars)
+class CustomUserCreationForm(UserCreationForm):
 
-    def save(self, blog_id, user):
-        comment = Comment()
-        comment.comment_text = self.cleaned_data['comment_text'] 
-        comment.user_rating = self.cleaned_data['user_rating'] 
-        comment.user = get_object_or_404(User, username=user)
-        comment.blog = get_object_or_404(Blog, pk=blog_id)
-        comment.save()
+    class Meta:
+        model = CustomUser
+        fields = ('username', 'email')
 
-class UserProfileForm(forms.Form):
-    profile_image = forms.ImageField()
+class CustomUserChangeForm(UserChangeForm):
 
-    def save(self, user, userProfile=UserProfile()):
-        userProfile.profile_image = self.cleaned_data['profile_image']
-        userProfile.user = get_object_or_404(User, username=user)
-        userProfile.save()
+    class Meta:
+        model = CustomUser
+        fields = ('username', 'email')
