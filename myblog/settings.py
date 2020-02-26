@@ -11,21 +11,36 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
+import dj_database_url
+import django_heroku
+from django.core.exceptions import ImproperlyConfigured
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
+PRODUCTION = os.environ.get('DATABASE_URL') != None
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'v=+=0sgyv37t*8zyni^2%p@u=hj)gh+k7g80%n@5zt0e0sr!ps'
+# SECRET_KEY = 'n^)esrx^wuqd@_r2f0zdy7ezrf9=6ajests-&i)^+y!s$=%i)a'
+
+def get_env_variable(var_name):
+    try:
+        return os.environ[var_name]
+    except KeyError:
+        error_msg = 'Set the {} environment variable'.format(var_name)
+        raise ImproperlyConfigured(error_msg)
+
+try:
+    SECRET_KEY = get_env_variable('SECRET_KEY')
+except ImproperlyConfigured:
+    SECRET_KEY = 'n^)esrx^wuqd@_r2f0zdy7ezrf9=6ajests-&i)^+y!s$=%i)a'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['ancient-hamlet-99710.herokuapp.com']
 
 ACCOUNT_ACTIVATION_DAYS = 7
 
@@ -87,7 +102,8 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
+if PRODUCTION:
+    DATABASES['default'] = dj_database_url.config()
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
@@ -127,5 +143,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
+
 MEDIA_URL = '/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+django_heroku.settings(locals())

@@ -24,6 +24,7 @@ p.date-time {
 {% endblock %}
 
 {% block content %}
+<a href="{% url 'callback' %}">callback</a>
 <div class="col-md-8">
 {% for blog in blog_list %}
     <div class=" blog">

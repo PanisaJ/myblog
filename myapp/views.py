@@ -10,6 +10,21 @@ from django.views.generic.edit import FormMixin
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 
+from linebot import LineBotApi
+from linebot.models import TextSendMessage
+from linebot.exceptions import LineBotApiError
+
+def line_callback(request):
+    print("vgfvfv")
+    line_bot_api = LineBotApi('aGfkYyhhG4arj5SPGeG2Fps+7+0chtvQiDCSwpkKvkngTDzWuE5eoqJ7naMA0vjxfwuIkvP9wX+bVOP39H1U9aZNeLf9PKWMfQNYQuTA++PUWwrbV+vXcOjeUv15XGmMJ/NaPPAEklizbp01Rkqk1wdB04t89/1O/w1cDnyilFU=')
+
+    try:
+        line_bot_api.reply_message('<reply_token>', TextSendMessage(text='Hello World!'))
+    except LineBotApiError as e:
+        print(e)
+
+    return redirect('index')
+
 class IndexView(ListView):
     queryset = Blog.objects.all().order_by('-updated_on')
     template_name = 'myapp/index.html'
@@ -110,3 +125,6 @@ class ImageUpdateView(UpdateView):
         return get_object_or_404(CustomUser, username=self.kwargs['blog_user'])
 
     
+
+
+
