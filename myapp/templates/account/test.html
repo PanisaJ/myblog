@@ -1,0 +1,7 @@
+{% load project_tags %}
+
+{% show_latest_blogs as lastest_blogs %}
+    <p>lastest blogs:</p>
+    {% for blog in lastest_blogs %}
+    <li> {{ blog.blog_title }} </li>
+{% endfor %}
