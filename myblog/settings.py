@@ -11,36 +11,38 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
-import dj_database_url
-import django_heroku
-from django.core.exceptions import ImproperlyConfigured
+# import dj_database_url
+# import django_heroku
+# from django.core.exceptions import ImproperlyConfigured
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+# # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-PRODUCTION = os.environ.get('DATABASE_URL') != None
+# PRODUCTION = os.environ.get('DATABASE_URL') != None
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = 'n^)esrx^wuqd@_r2f0zdy7ezrf9=6ajests-&i)^+y!s$=%i)a'
+SECRET_KEY = 'n^)esrx^wuqd@_r2f0zdy7ezrf9=6ajests-&i)^+y!s$=%i)a'
 
-def get_env_variable(var_name):
-    try:
-        return os.environ[var_name]
-    except KeyError:
-        error_msg = 'Set the {} environment variable'.format(var_name)
-        raise ImproperlyConfigured(error_msg)
+# def get_env_variable(var_name):
+#     try:
+#         return os.environ[var_name]
+#     except KeyError:
+#         error_msg = 'Set the {} environment variable'.format(var_name)
+#         raise ImproperlyConfigured(error_msg)
 
-try:
-    SECRET_KEY = get_env_variable('SECRET_KEY')
-except ImproperlyConfigured:
-    SECRET_KEY = 'n^)esrx^wuqd@_r2f0zdy7ezrf9=6ajests-&i)^+y!s$=%i)a'
+# try:
+#     SECRET_KEY = get_env_variable('SECRET_KEY')
+# except ImproperlyConfigured:
+#     SECRET_KEY = 'n^)esrx^wuqd@_r2f0zdy7ezrf9=6ajests-&i)^+y!s$=%i)a'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['ancient-hamlet-99710.herokuapp.com']
+ALLOWED_HOSTS = ['*']
+
+INTERNAL_IPS = ['127.0.0.1']
 
 ACCOUNT_ACTIVATION_DAYS = 7
 
@@ -48,6 +50,7 @@ ACCOUNT_ACTIVATION_DAYS = 7
 
 INSTALLED_APPS = [
     'myapp.apps.MyappConfig',
+    'account.apps.AccountConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -56,9 +59,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'widget_tweaks',
     'django_starfield',
+    'debug_toolbar',
 ]
 
 MIDDLEWARE = [
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -85,7 +90,12 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'myapp.context_processors.get_current_year_to_context',
+                'myapp.context_processors.get_latest_blogs',
             ],
+            'libraries': {
+                'project_tags': 'myapp.templatetags.myapp_extras',
+            },
         },
     },
 ]
@@ -102,8 +112,8 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-if PRODUCTION:
-    DATABASES['default'] = dj_database_url.config()
+# if PRODUCTION:
+#     DATABASES['default'] = dj_database_url.config()
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
@@ -143,10 +153,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
-STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
+# PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-MEDIA_URL = '/'
+MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-django_heroku.settings(locals())
+# django_heroku.settings(locals())
